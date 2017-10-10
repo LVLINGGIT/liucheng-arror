@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+  <style>
+    div.arrows{
+      width: 90px;
+      height: 25px;
+      border: 1px solid #aaa;
+      background: #eee;
+      float: left;
+      margin-right: 20px;
+      text-align: center;
+    }
+    div.arrows .top{
+      position: relative;
+      display: block;
+      width: 0;
+      height: 0;
+      border:14px solid red;
+      border-color: transparent transparent transparent #aaa;
+      margin-left: 91px;
+      margin-top: -22.5px;
+    }
+    div.arrows .top:before{
+      position: absolute;
+      content:'';
+      left: -15px;
+      top: -12px;
+      display: block;
+      width: 0;
+      height: 0;
+      border:12px solid red;
+      border-color: transparent transparent transparent #eee;
+    }
+    div.arrows .foot{
+      position: relative;
+      display: block;
+      width: 0;
+      height: 0;
+      border:14px solid red;
+      border-color: transparent transparent transparent #aaa;
+      margin-left: 1px;
+      margin-top: -27.5px;
+    }
+    div.arrows .foot:before{
+      position: absolute;
+      content: '';
+      left: -17px;
+      top: -15px;
+      display: block;
+      width: 0;
+      height: 0;
+      border: 15px solid red;
+      border-color: transparent transparent transparent #fff;
+    }
+    div.arrows .footlast{
+      margin-left: 1px;
+      margin-top: -22.5px;
+    }
+    /* .daishenghe:hover{
+      background: blue;
+      color:#fff;
+    }
+    .daishenghe:hover .top{
+      border-color: transparent transparent transparent blue;
+    }
+    .daishenghe:hover .top:before{
+      border-color: transparent transparent transparent blue;
+    } */
+    div.isCurrentStatus{
+      background: blue;
+      color:#fff;
+      border: 1px solid blue;
+    }
+    div.isCurrentStatus .top{
+      border-color: transparent transparent transparent blue;
+    }
+    div.isCurrentStatus .top:before{
+      border-color: transparent transparent transparent blue;
+    }
+    div.end{
+      width: 95px;
+      height: 25px;
+      border:1px solid red;
+      position: absolute;
+      top:50px;
+      left:340px;
+      text-align: center;
+      display: none;
+    }
+  </style>
+  <script>
+  window.onload=function () {
+      var array = [
+        {
+          "name":"待接单",
+          "status":"WAIT_ACCEPT",
+          "isShadowed":true
+        },
+        {
+          "name":"待发货",
+          "status":"WAIT_DELIVER",
+          "isShadowed":true,
+          "isCurrentStatus":true
+        },
+        {
+          "name":"验货入库",
+          "status":"STOCK_IN"
+        },
+        {
+          "name":"已完成",
+          "status":"DELIVERED"
+        }
+      ];
+      var str=`
+        <div class="arrows">${array[0].name}
+          <span class="top"></span>
+        </div>
+        <div class="arrows">${array[1].name}
+          <span class="top"></span>
+          <span class="foot"></span>
+        </div>
+        <div class="arrows">${array[2].name}
+          <span class="top"></span>
+          <span class="foot"></span>
+        </div>
+        <div class="arrows">${array[3].name}
+          <span class="foot footlast"></span>
+        </div>
+        <div class="end">已终止</div>
+      `;
+      var arrowsGroup=document.getElementsByClassName('arrows-group')[0];
+      arrowsGroup.innerHTML=str;
+      var arrows=document.getElementsByClassName('arrows');
+      // console.log(arrows);
+      for (var i = 0; i < array.length; i++) {
+        if(array[i].isCurrentStatus){
+          arrows[i].className='arrows isCurrentStatus';
+        }
+      }
+      //当有且仅有一个对象，已中止显示
+      var isCurrentStatus=document.getElementsByClassName('isCurrentStatus');
+      var end=document.getElementsByClassName('end')[0];
+      if (isCurrentStatus.length==1) {
+        end.style.display='block';
+      }
+  }
+  </script>
+</head>
+<body>
+  <div class="arrows-group"></div>
+</body>
+</html>
